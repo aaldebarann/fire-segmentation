@@ -2,7 +2,7 @@ from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 import io
 import numpy as np
-import rasterio
+import imageio
 
 
 def authentication():
@@ -105,8 +105,8 @@ def download(bbox, time_interval, rescale=False):
         print("reason: {0}".format(response.reason))
         raise Exception("response status code: {0}".format(response.status_code))
 
-    x = rasterio.open(io.BytesIO(response.content)).read()
-    x = np.asarray(x).astype('float32').transpose((1, 2, 0))
+    x = imageio.imread(io.BytesIO(response.content))
+    x = np.asarray(x).astype('float32')
     if rescale:
         x /= np.max(x)
     return x
