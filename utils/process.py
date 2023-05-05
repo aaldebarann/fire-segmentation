@@ -5,14 +5,14 @@ import os
 from PIL import Image
 
 
-MODEL = os.path.join("models", "model-resnet34-adam-0008.h5")
+DEFAULT_MODEL = "model-resnet50-novograd-0008.h5"
 
 
 def date_to_interval(date):
     return "{0}T00:00:00Z".format(date), "{0}T23:59:59Z".format(date)
 
 
-def get_mask(bbox, time_interval):
+def get_mask(bbox, time_interval, model=DEFAULT_MODEL):
     assert (bbox[2] > bbox[0] and bbox[3] > bbox[1])
     """
     date is a string in format "yyyy-mm-dd"
@@ -53,7 +53,7 @@ def get_mask(bbox, time_interval):
     else:
         x = download(bbox, time_interval, True)
         batch = np.array([x, ])
-        y = predict(batch, MODEL)[0]
+        y = predict(batch, model)[0]
         return y
 
 

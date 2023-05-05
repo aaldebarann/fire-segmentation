@@ -16,7 +16,9 @@ def main():
 
     x = get_image(bbox, time_interval)  # 5-channels image
     x = utils.show.rgb_410(x)  # RGB image
-    y = get_mask(bbox, time_interval)  # grayscale mask
+    model = "model-resnet50-novograd-0008.h5"  # choose model from /models
+    y = get_mask(bbox, time_interval, model)  # 1-channel mask, where pixels are in range [0, 1]
+
     # print images
     fig = plt.figure()
     plt.axis('off')

@@ -17,11 +17,13 @@ tf.config.set_visible_devices([], 'GPU')
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
-def predict(batch, model_path):
+def predict(batch, model_name):
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     loss = sm.losses.JaccardLoss(class_weights=(10,))
     custom_objects = {"jaccard_loss": loss,
                       "iou_score": sm.metrics.iou_score}
+
+    model_path = os.path.join("models", model_name)
     model = load_model(model_path, custom_objects)
 
     return model.predict(batch, verbose=1)
