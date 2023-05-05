@@ -8,7 +8,7 @@ def true_rgb(x):
     # return image with 3 channels:
     # visible red, green and blue
     image_rgb = x.transpose(2, 0, 1)
-    image_rgb = np.array([image_rgb[4], image_rgb[1], image_rgb[0]])
+    image_rgb = np.array([image_rgb[2], image_rgb[1], image_rgb[0]])
     image_rgb = image_rgb.transpose((1, 2, 0))
     return image_rgb
 

@@ -52,7 +52,6 @@ def get_mask(bbox, time_interval):
         return np.concatenate((im2, im1), axis=0)
     else:
         x = download(bbox, time_interval, True)
-        print(x.shape)
         batch = np.array([x, ])
         y = predict(batch, MODEL)[0]
         return y
@@ -98,5 +97,6 @@ def get_image(bbox, time_interval):
         return np.concatenate((im2, im1), axis=0)
     else:
         x = download(bbox, time_interval, False)
+        x = x.astype(np.uint8)
         return x
 
