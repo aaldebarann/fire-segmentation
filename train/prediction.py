@@ -14,6 +14,7 @@ from keras.optimizers import Adam
 from tensorflow_addons.optimizers import NovoGrad
 # Hide GPU from visible devices
 tf.config.set_visible_devices([], 'GPU')
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
 def predict(batch, model_path):
