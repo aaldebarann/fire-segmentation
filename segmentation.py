@@ -1,7 +1,6 @@
 import utils.show
 from utils.process import get_mask, get_image
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 def main():
