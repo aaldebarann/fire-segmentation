@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 def main():
     # coordinates in EPSG:4326
     bbox = [
-      45.526559,
-      56.323391,
-      45.722638,
-      56.418649
+      43.191869,
+      54.622978,
+      44.349925,
+      55.196116
     ]
     # image will be picked in time interval
-    time_interval = ("2022-08-15T00:00:00Z", "2022-08-30T00:00:00Z")
+    time_interval = ("2021-08-10T00:00:00Z", "2022-08-18T00:00:00Z")
 
     x = get_image(bbox, time_interval)  # 5-channels image
     x = utils.show.rgb_410(x)  # RGB image
