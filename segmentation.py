@@ -5,18 +5,20 @@ import numpy as np
 
 
 def main():
+    # coordinates in EPSG:4326
     bbox = [
       45.526559,
       56.323391,
       45.722638,
       56.418649
     ]
+    # image will be picked in time interval
     time_interval = ("2022-08-15T00:00:00Z", "2022-08-30T00:00:00Z")
 
     x = get_image(bbox, time_interval)  # 5-channels image
     x = utils.show.rgb_410(x)  # RGB image
-    y = get_mask(bbox, time_interval)
-
+    y = get_mask(bbox, time_interval)  # grayscale mask
+    # print images
     fig = plt.figure()
     plt.axis('off')
     plt.title("fire segmentation sample")
