@@ -10,6 +10,6 @@ pip install -r requirements.txt
 ***segmentation.py*** - пример сегментации изображения, полученного со спутникого снимка.
   
 Директория ***train*** содержит файлы программы, связанные с обучением моделей. 
-Файлы обученных моделей необходимо скачать по ссылке [Google Drive](https://drive.google.com/drive/folders/1QcJIFJjenfI00Y8Z7DHgiJ03xUzYY7kA?usp=sharing) и поместить в директорию ***models***. 
+Файлы обученных моделей необходимо скачать по ссылке [Google Drive](https://drive.google.com/drive/folders/1QcJIFJjenfI00Y8Z7DHgiJ03xUzYY7kA?usp=sharing) и поместить в директорию ***models***. Для сегментации изображения рекомендуется использовать модель "model-resnet50-novograd-0008.h5".
   
 Директория ***utils*** содержит файлы, реализующие логику получения спутникого изображения, его обработки и вывода.
