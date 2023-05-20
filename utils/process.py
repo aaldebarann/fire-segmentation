@@ -5,9 +5,9 @@ import os
 from PIL import Image
 
 
-DEFAULT_MODEL = "model-resnet50-novograd-0008.h5"
-MIN_LONGITUDE_DELTA = 3.2
-MIN_LATITUDE_DELTA = 1.6
+DEFAULT_MODEL = "model-resnet34-adam-0008.h5"
+MIN_LONGITUDE_DELTA = 0.4
+MIN_LATITUDE_DELTA = 0.2
 DEPTH = 1
 
 
@@ -28,6 +28,7 @@ def get_mask(bbox, time_interval, model=DEFAULT_MODEL):
              (bbox[0] + bbox[2]) / 2,
              bbox[3],
              ],
+            model,
             time_interval)
         im2 = get_mask(
             [(bbox[0] + bbox[2]) / 2,
@@ -35,6 +36,7 @@ def get_mask(bbox, time_interval, model=DEFAULT_MODEL):
              bbox[2],
              bbox[3],
              ],
+            model,
             time_interval)
         return np.concatenate((im1, im2), axis=1)
     elif bbox[3] - bbox[1] > MIN_LATITUDE_DELTA:
@@ -44,6 +46,7 @@ def get_mask(bbox, time_interval, model=DEFAULT_MODEL):
              bbox[2],
              (bbox[3] + bbox[1])/2,
              ],
+            model,
             time_interval)
         im2 = get_mask(
             [bbox[0],
@@ -51,11 +54,13 @@ def get_mask(bbox, time_interval, model=DEFAULT_MODEL):
              bbox[2],
              bbox[3],
              ],
+            model,
             time_interval)
         return np.concatenate((im2, im1), axis=0)
     else:
-        x = download(bbox, time_interval, width=256*pow(2, DEPTH+1), height=256*pow(2, DEPTH+1), rescale=True)
-        y = get_valid_area_mask(DEPTH, x, rescale=True, model=model)
+        x = download(bbox, time_interval, rescale=True)
+        batch = np.array([x, ])
+        y = predict(batch, model)[0]
         return y
 
 
@@ -98,12 +103,13 @@ def get_image(bbox, time_interval):
             time_interval)
         return np.concatenate((im2, im1), axis=0)
     else:
-        x = get_valid_area_image(DEPTH, bbox, time_interval)
+        x = download(bbox, time_interval, rescale=False)
+        x = x.astype(np.uint8)
         return x
 
 
 def get_valid_area_image(depth, bbox, time_interval):
-    x = download(bbox, time_interval, width=256*depth, height=256*depth)
+    x = download(bbox, time_interval, width=256*(depth+1), height=256*(depth+1))
     x = x.astype(np.uint8)
     return x
 
