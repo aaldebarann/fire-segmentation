@@ -28,7 +28,7 @@ def main():
     plt.imshow(x, interpolation='lanczos')
     a.set_title('image')
     a = fig.add_subplot(1, 2, 2)
-    plt.imshow(y, interpolation='nearest')
+    plt.imshow(y, interpolation='lanczos')
     a.set_title('mask')
     plt.show()
 
