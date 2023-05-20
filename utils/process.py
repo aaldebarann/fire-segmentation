@@ -89,10 +89,12 @@ def get_valid_area_mask(x, model):
     batch = split(x)
     mask_batch = predict(batch, model)
     mask = np.empty((x.shape[0], x.shape[1], 1))
-    N = mask_batch.shape[0] // 2
+    N = mask.shape[0] // 256
 
-    for i in range(0, N, 256):
-        for j in range(0, N, 256):
-            mask[i:i+256, j:j+256] = mask_batch[(i//256)*N + (j//256)]
+    for i in range(0, N):
+        for j in range(0, N):
+            u = i*256
+            v = j*256
+            mask[u:u+256, v:v+256] = mask_batch[i*N + j]
 
     return mask
