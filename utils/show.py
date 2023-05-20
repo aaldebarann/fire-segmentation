@@ -30,7 +30,7 @@ def show(image, title="image"):
         image = image[:, :, 0]
 
     plt.title(title)
-    plt.imshow(image, interpolation='lanczos')
+    plt.imshow(image, interpolation='nearest')
     plt.show()
 
 
