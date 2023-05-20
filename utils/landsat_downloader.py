@@ -19,7 +19,7 @@ def authentication():
     return token, oauth
 
 
-def build_request(bbox, time_interval):
+def build_request(bbox, time_interval, width, height):
     # evalscript
     evalscript = """
     //VERSION=3
@@ -29,21 +29,22 @@ def build_request(bbox, time_interval):
         input: ['B02',
                 'B03',
                 'B04',
-                'B05',
                 'B06',
+                'B07',
               ],
         output: { id: 'default',
-                  bands: 5 }
+                  bands: 5,
+                  sampleType: 'AUTO'}
       };
     }
 
     function evaluatePixel(sample) {
       return [
-              sample.B06,
-              sample.B05,
-              sample.B04,
+              sample.B02,
               sample.B03,
-              sample.B02
+              sample.B04,
+              sample.B06,
+              sample.B07,
               ];
     }
     """
@@ -59,20 +60,20 @@ def build_request(bbox, time_interval):
             },
             'data': [
                 {
-                    'type': 'landsat-ot-l1',
+                    'type': 'landsat-ot-l2',
                     'dataFilter': {
                         'timeRange': {
                             "from": time_interval[0],
                             "to": time_interval[1]
                         },
-                        'mosaickingOrder': 'leastCC',
+                        'mosaickingOrder': 'mostRecent',
                     },
                 }
             ]
         },
         'output': {
-            'width': 256,
-            'height': 256,
+            'width': width,
+            'height': height,
             'responses': [
                 {
                     'identifier': 'default',
@@ -87,9 +88,9 @@ def build_request(bbox, time_interval):
     return json_request
 
 
-def download(bbox, time_interval, rescale=False):
+def download(bbox, time_interval, width=256, height=256, rescale=False,):
     token, oauth = authentication()
-    json_request = build_request(bbox, time_interval)
+    json_request = build_request(bbox, time_interval, width, height)
     # Set the request url and headers
     url_request = 'https://services-uswest2.sentinel-hub.com/api/v1/process'
     headers_request = {
