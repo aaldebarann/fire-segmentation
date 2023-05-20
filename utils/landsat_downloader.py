@@ -29,21 +29,22 @@ def build_request(bbox, time_interval, width, height):
         input: ['B02',
                 'B03',
                 'B04',
-                'B05',
                 'B06',
+                'B07',
               ],
         output: { id: 'default',
-                  bands: 5 }
+                  bands: 5,
+                  sampleType: 'AUTO'}
       };
     }
 
     function evaluatePixel(sample) {
       return [
-              sample.B06,
-              sample.B05,
-              sample.B04,
+              sample.B02,
               sample.B03,
-              sample.B02
+              sample.B04,
+              sample.B06,
+              sample.B07,
               ];
     }
     """
