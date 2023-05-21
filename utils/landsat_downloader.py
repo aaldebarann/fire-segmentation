@@ -66,7 +66,7 @@ def build_request(bbox, time_interval, width, height):
                             "from": time_interval[0],
                             "to": time_interval[1]
                         },
-                        'mosaickingOrder': 'mostRecent',
+                        'mosaickingOrder': 'leastRecent',
                     },
                 }
             ]
