@@ -7,8 +7,8 @@ import math
 
 
 DEFAULT_MODEL = "model-resnet34-adam-0008.h5"
-MIN_LONGITUDE_DELTA = 0.36
-MIN_LATITUDE_DELTA = 0.2
+MIN_LONGITUDE_DELTA = 0.18
+MIN_LATITUDE_DELTA = 0.1
 
 
 def date_to_interval(date):
